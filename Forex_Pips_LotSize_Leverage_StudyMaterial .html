@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ফরেক্স ট্রেডিং — পিপস, লট সাইজ, লেভারেজ | মাস্টার স্টাডি নোট</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&family=Inter:wght@400;600;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Noto Sans Bengali','Inter',sans-serif;background:#f0f2f5;color:#1e293b;line-height:1.7;padding:32px 16px}
+  .container{max-width:860px;margin:0 auto}
+
+  /* TITLE BLOCK */
+  .title-block{background:linear-gradient(135deg,#1e293b 0%,#334155 100%);border-radius:16px;padding:40px 36px;margin-bottom:32px;color:#fff;position:relative;overflow:hidden}
+  .title-block::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;background:rgba(99,102,241,.15);border-radius:50%}
+  .title-block::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;background:rgba(59,130,246,.1);border-radius:50%}
+  .title-block h1{font-size:1.75rem;font-weight:700;position:relative;z-index:1;margin-bottom:8px}
+  .title-block .subtitle{font-size:.95rem;color:#cbd5e1;position:relative;z-index:1}
+  .badge-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;position:relative;z-index:1}
+  .badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#e2e8f0;padding:5px 14px;border-radius:20px;font-size:.82rem;font-weight:600}
+
+  /* SECTION CARDS */
+  .section-card{background:#fff;border-radius:14px;padding:30px 32px;margin-bottom:24px;box-shadow:0 2px 12px rgba(0,0,0,.06);border:1px solid #e2e8f0}
+  .section-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #f1f5f9}
+  .section-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+  .icon-blue{background:#eff6ff;color:#3b82f6}
+  .icon-green{background:#f0fdf4;color:#22c55e}
+  .icon-purple{background:#faf5ff;color:#a855f7}
+  .icon-orange{background:#fff7ed;color:#f97316}
+  .icon-red{background:#fef2f2;color:#ef4444}
+  .section-header h2{font-size:1.25rem;font-weight:700;color:#1e293b}
+  .section-header .sec-num{font-size:.78rem;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px}
+
+  /* TYPOGRAPHY */
+  h3{font-size:1.05rem;font-weight:700;color:#334155;margin:22px 0 10px}
+  p{font-size:.93rem;color:#475569;margin-bottom:12px}
+  strong{color:#1e293b}
+
+  /* DEFINITION BOX */
+  .def-box{background:#f8fafc;border-left:4px solid #3b82f6;border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;font-size:.92rem}
+  .def-box .def-label{font-size:.75rem;font-weight:700;color:#3b82f6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+  .def-box p{margin-bottom:0;color:#334155}
+
+  .def-green .def-label{color:#16a34a}
+  .def-green{border-left-color:#22c55e}
+  .def-purple .def-label{color:#9333ea}
+  .def-purple{border-left-color:#a855f7}
+
+  /* TABLES */
+  .table-wrap{overflow-x:auto;margin:16px 0}
+  table{width:100%;border-collapse:collapse;font-size:.88rem}
+  thead tr{background:#1e293b;color:#fff}
+  thead th{padding:11px 14px;text-align:left;font-weight:600;font-size:.82rem;text-transform:uppercase;letter-spacing:.4px}
+  tbody tr{border-bottom:1px solid #e2e8f0}
+  tbody tr:nth-child(even){background:#f8fafc}
+  tbody td{padding:10px 14px;color:#475569}
+  tbody td:first-child{font-weight:600;color:#1e293b}
+
+  /* HIGHLIGHT TABLE (colored) */
+  .hl-table thead tr{background:linear-gradient(135deg,#6366f1,#8b5cf6)}
+  .hl-table tbody td:last-child{font-weight:700;color:#6366f1}
+
+  /* EXAMPLE / CALCULATION BOX */
+  .calc-box{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #bfdbfe;border-radius:12px;padding:18px 20px;margin:16px 0}
+  .calc-box .calc-title{font-size:.78rem;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .calc-box .calc-title::before{content:'🔢'}
+  .calc-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+  .step-num{background:#2563eb;color:#fff;width:22px;height:22px;border-radius:50%;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .step-text{font-size:.9rem;color:#1e40af}
+
+  /* FORMULA */
+  .formula{background:#1e293b;color:#67e8f9;border-radius:10px;padding:12px 18px;font-family:'Courier New',monospace;font-size:.93rem;margin:14px 0;text-align:center;font-weight:600}
+
+  /* WARNING / TIP / KEY POINT */
+  .alert{border-radius:10px;padding:13px 17px;margin:16px 0;font-size:.88rem}
+  .alert-icon{margin-right:8px}
+  .warn{background:#fffbeb;border:1px solid #fcd34d;color:#92400e}
+  .tip{background:#f0fdf4;border:1px solid #86efac;color:#166534}
+  .key{background:#fef3c7;border:1px solid #fbbf24;color:#92400e}
+  .danger{background:#fef2f2;border:1px solid #fca5a5;color:#991b1b}
+
+  /* BULLET LIST */
+  ul{list-style:none;padding:0;margin:10px 0}
+  ul li{padding:5px 0 5px 22px;position:relative;font-size:.91rem;color:#475569}
+  ul li::before{content:'›';position:absolute;left:4px;color:#6366f1;font-weight:700;font-size:1.1rem}
+
+  /* SUMMARY BOX */
+  .summary-box{background:linear-gradient(135deg,#1e293b,#334155);border-radius:14px;padding:26px 28px;color:#fff;margin:0}
+  .summary-box h3{color:#67e8f9;margin-top:0;font-size:1rem}
+  .summary-box ul li{color:#cbd5e1}
+  .summary-box ul li::before{color:#67e8f9}
+
+  /* QUIZ */
+  .quiz-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px 18px;margin:10px 0}
+  .quiz-card .q-num{font-size:.75rem;font-weight:700;color:#6366f1;text-transform:uppercase}
+  .quiz-card p{margin-bottom:0;font-size:.92rem;color:#334155;font-weight:600}
+
+  /* DIVIDER */
+  .divider{height:2px;background:linear-gradient(90deg,transparent,#e2e8f0,transparent);margin:8px 0 4px}
+
+  /* MISTAKE TAG */
+  .mistake-tag{display:inline-block;background:#fee2e2;color:#dc2626;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:6px;vertical-align:middle}
+  .correct-tag{display:inline-block;background:#dcfce7;color:#16a34a;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-right:6px;vertical-align:middle}
+
+  /* RESPONSIVE */
+  @media(max-width:600px){
+    .title-block{padding:28px 22px}
+    .section-card{padding:22px 18px}
+    .title-block h1{font-size:1.4rem}
+  }
+  @media print{
+    body{background:#fff;padding:0}
+    .section-card{box-shadow:none;border:1px solid #ddd;margin-bottom:18px}
+    .title-block{background:#1e293b !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== TITLE ===== -->
+<div class="title-block">
+  <h1>📈 ফরেক্স ট্রেডিং — মাস্টার স্টাডি নোট</h1>
+  <p class="subtitle">পিপস • লট সাইজ • লেভারেজ — তিনটা বিষয়ের সম্পূর্ণ গাইড</p>
+  <div class="badge-row">
+    <span class="badge">🎯 বেসিক → অ্যাডভান্সড</span>
+    <span class="badge">📊 লাইভ এক্সামপল সহ</span>
+    <span class="badge">⚠️ কমন ভুল ধরা আছে</span>
+    <span class="badge">✅ সেলফ-টেস্ট কুইজ</span>
+  </div>
+</div>
+
+<!-- ===== SECTION 0: PRE-REQUIREMENT ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-orange">📌</div>
+    <div><span class="sec-num">পূর্বশর্ত</span><h2>এই নোট পড়ার আগে যা জানা লাগবে</h2></div>
+  </div>
+  <div class="def-box">
+    <div class="def-label">বেস কারেন্সি ও কোট কারেন্সি</div>
+    <p><strong>EUR/USD</strong> এই পেয়ারে — <strong>EUR</strong> হচ্ছে বেস কারেন্সি (প্রথমটা), আর <strong>USD</strong> হচ্ছে কোট কারেন্সি (দ্বিতীয়টা)।<br/>
+    মানে: ১ টা EUR কিনতে কত USD লাগবে — সেটাই এই পেয়ারের প্রাইস বলে।</p>
+  </div>
+  <p>যখন আমরা কোনো পেয়ারে <strong>"বাই"</strong> করি — মানে বেস কারেন্সি কিনছি। যখন <strong>"সেল"</strong> করি — বেস কারেন্সি বিক্রি করছি।</p>
+</div>
+
+<!-- ===== SECTION 1: PIPS ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-blue">📏</div>
+    <div><span class="sec-num">সেকশন ১</span><h2>পিপস (Pips) — মার্কেটের প্রাইস পরিমাপের একক</h2></div>
+  </div>
+
+  <div class="def-box">
+    <div class="def-label">পিপস কী?</div>
+    <p>মার্কেটের প্রাইস কতটুকু বাড়ছে বা কমছে — সেই পরিবর্তনটা পরিমাপ করার <strong>একক (unit)</strong> হচ্ছে পিপস।</p>
+  </div>
+
+  <h3>পিপ vs পিপস — দুইটার মধ্যে তফাত কী?</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>টার্ম</th><th>অর্থ</th><th>এক্সামপল</th></tr></thead>
+      <tbody>
+        <tr><td>Pip (একবচন)</td><td>মাত্র <strong>১টা</strong> সংখ্যা চেঞ্জ হলে</td><td>80 → 81 = ১ পিপ</td></tr>
+        <tr><td>Pips (বহুবচন)</td><td><strong>এক এর বেশি</strong> সংখ্যা চেঞ্জ হলে</td><td>80 → 85 = ৫ পিপস</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>ফরেক্স কারেন্সি পেয়ারে পিপস কীভাবে গণনা করবেন?</h3>
+  <div class="alert tip"><span class="alert-icon">💡</span><strong>মূল নিয়ম:</strong> ফরেক্স কারেন্সি পেয়ারের প্রাইসের <strong>লাস্ট একটা ডিজিট বাদ দিন</strong>। বাকি সংখ্যাগুলো দিয়েই পিপস হিসাব করুন।</div>
+
+  <div class="calc-box">
+    <div class="calc-title">এক্সামপল — EUR/USD এর পিপস গণনা</div>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text">ধরুন প্রাইস এখন <strong>1.1380<span style="color:#ef4444;font-weight:700">0</span></strong> (লাস্ট ডিজিট লাল)</div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text">লাস্ট ডিজিটটা বাদ দিন → আপনার কার্যকর প্রাইস = <strong>1.1380</strong></div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text">মার্কেট যদি <strong>1.1385</strong> এ যায়, তাহলে পার্থক্য = 85 − 80 = <strong>৫ পিপস আপ</strong></div></div>
+    <div class="calc-step"><div class="step-num">৪</div><div class="step-text">মার্কেট যদি <strong>1.1375</strong> এ যায়, তাহলে পার্থক্য = 80 − 75 = <strong>৫ পিপস ডাউন</strong></div></div>
+  </div>
+
+  <h3>গোল্ডের মার্কেটে পিপস — নিয়মটা আলাদা!</h3>
+  <div class="alert warn"><span class="alert-icon">⚠️</span><strong>গুরুত্বপূর্ণ পার্থক্য:</strong> গোল্ডের ক্ষেত্রে লাস্ট <strong>দুইটা ডিজিট বাদ দিতে হবে</strong>, শুধু একটা নয়।</div>
+
+  <div class="table-wrap">
+    <table class="hl-table">
+      <thead><tr><th>মার্কেট টাইপ</th><th>কত ডিজিট বাদ দেবেন</th><th>এক্সামপল</th></tr></thead>
+      <tbody>
+        <tr><td>Forex Currency Pair<br/>(EUR/USD, GBP/JPY ইত্যাদি)</td><td><strong>লাস্ট ১টা ডিজিট</strong></td><td>1.138<span style="color:#ef4444;font-weight:700">0</span> → 1.138 দিয়ে কাজ</td></tr>
+        <tr><td>Gold (XAU/USD)</td><td><strong>লাস্ট ২টা ডিজিট</strong></td><td>2,489.<span style="color:#ef4444;font-weight:700">24</span> → 2,489 দিয়ে কাজ</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calc-box">
+    <div class="calc-title">গোল্ড পিপস গণনার উদাহরণ</div>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text">গোল্ডের দুই প্রাইস: <strong>2,500.24</strong> এবং <strong>2,489.88</strong></div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text">লাস্ট ২ ডিজিট বাদ দিন → <strong>2,500</strong> এবং <strong>2,490</strong> (রাউন্ড করে)</div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text">পার্থক্য = 2500 − 2490 = <strong>১০-১১ পিপস</strong></div></div>
+  </div>
+</div>
+
+<!-- ===== SECTION 2: LOT SIZE ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-green">📦</div>
+    <div><span class="sec-num">সেকশন ২</span><h2>লট সাইজ (Lot Size) — ট্রেডের পরিমাণ</h2></div>
+  </div>
+
+  <div class="def-box def-green">
+    <div class="def-label">লট সাইজ কী?</div>
+    <p>আপনি কতটুকু পরিমাণে বাই বা সেল করছেন — সেই পরিমাণটাই হচ্ছে লট সাইজ।<br/>
+    সহজ ভাষায়: বাজারে আলু কিনার সময় যেমন "৫ কেজি" বলেন — সেমনি ট্রেডিং এর সময় "কত লট" বলেন।</p>
+  </div>
+
+  <h3>লট সাইজের ৩ ধরন</h3>
+  <div class="table-wrap">
+    <table class="hl-table">
+      <thead><tr><th>লট টাইপ</th><th>লট সাইজ</th><th>ইউনিট সংখ্যা</th><th>ডলারে মূল্য</th></tr></thead>
+      <tbody>
+        <tr><td>🏢 Standard Lot</td><td>1.00</td><td>1,00,000 (১ লাখ)</td><td>$1,00,000</td></tr>
+        <tr><td>🏠 Mini Lot</td><td>0.10</td><td>10,000 (১০ হাজার)</td><td>$10,000</td></tr>
+        <tr><td>🏡 Micro Lot</td><td>0.01</td><td>1,000 (১ হাজার)</td><td>$1,000</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert tip"><span class="alert-icon">💡</span><strong>মনে রাখার সহজ ট্রিক:</strong> প্রতিটা লেভেল ১০ গুণ ছোট হয়। Standard → Mini = ÷10, Mini → Micro = ÷10।</div>
+
+  <h3>লট সাইজ আর পিপসের সাথে লাভ/লস হিসাব</h3>
+  <p>প্রতিটা লট টাইপে <strong>১ পিপস পরিবর্তন</strong> হলে কত ডলার লাভ বা লস হয় — এটা মনে রাখা অত্যন্ত জরুরি।</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>লট টাইপ</th><th>লট সাইজ</th><th>১ পিপস = কত ডলার লাভ/লস</th></tr></thead>
+      <tbody>
+        <tr><td>Standard</td><td>1.00</td><td><strong>$10</strong></td></tr>
+        <tr><td>Mini</td><td>0.10</td><td><strong>$1</strong></td></tr>
+        <tr><td>Micro</td><td>0.01</td><td><strong>$0.10 (১০ সেন্ট)</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="calc-box">
+    <div class="calc-title">লাইভ এক্সামপল — ৮ পিপস আপ হলে কত লাভ?</div>
+    <p style="font-size:.86rem;color:#1e40af;margin-bottom:10px">ধরুন মার্কেট ৮ পিপস উপরে গেছে। তাহলে প্রতিটা লট টাইপে কত লাভ হবে?</p>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text"><strong>Standard Lot (1.00):</strong> ৮ × $10 = <strong>$80 লাভ</strong></div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text"><strong>Mini Lot (0.10):</strong> ৮ × $1 = <strong>$8 লাভ</strong></div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text"><strong>Micro Lot (0.01):</strong> ৮ × $0.10 = <strong>$0.80 লাভ</strong></div></div>
+  </div>
+
+  <h3>লট সাইজ বাড়ালে কী হয়?</h3>
+  <p>যদি আপনি <strong>2.00 লট (টু স্ট্যান্ডার্ড)</strong> নেন, তাহলে প্রতি পিপসে লাভ/লস <strong>দ্বিগুণ</strong> হবে — অর্থাৎ ২০ ডলার।</p>
+  <div class="alert key"><span class="alert-icon">🔑</span><strong>মূল নিয়ম:</strong> লট সাইজ যত বাড়াবেন, প্রতি পিপসে লাভ আর লস দুটোই সমানভাবে বাড়বে। এটাই রিস্কের জায়গা।</div>
+</div>
+
+<!-- ===== SECTION 3: LEVERAGE ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-purple">⚡</div>
+    <div><span class="sec-num">সেকশন ৩</span><h2>লেভারেজ (Leverage) — ভার্চুয়াল লোন সিস্টেম</h2></div>
+  </div>
+
+  <div class="def-box def-purple">
+    <div class="def-label">লেভারেজ কী?</div>
+    <p>লেভারেজ হচ্ছে ব্রোকার আপনাকে দেওয়া একটা <strong>ভার্চুয়াল লোন</strong>। আপনার যে ব্যালেন্স আছে, তার কয়েক গুণ বেশি টাকা দিয়ে ট্রেড করার ক্ষমতা এটি দেয়।</p>
+  </div>
+
+  <h3>কেন লেভারেজ দরকার?</h3>
+  <p>ফরেক্স মার্কেটে ট্রেড করতে অনেক বেশি টাকা লাগে। আপনার কাছে হয়তো মাত্র ১০০ ডলার আছে, কিন্তু একটা ট্রেড নিতে ১০,০০০ ডলার লাগে। এই সমস্যার সমাধান হলো <strong>লেভারেজ</strong>।</p>
+
+  <div class="formula">আপনার পাওয়ার = আপনার ব্যালেন্স × লেভারেজ গুণ</div>
+
+  <h3>লেভারেজের এক্সামপল — ধাপে ধাপে</h3>
+  <div class="table-wrap">
+    <table class="hl-table">
+      <thead><tr><th>ব্যালেন্স</th><th>লেভারেজ</th><th>মোট পাওয়ার</th><th>সম্ভব লট সাইজ</th></tr></thead>
+      <tbody>
+        <tr><td>$100</td><td>100x</td><td>$10,000</td><td>Mini (0.10)</td></tr>
+        <tr><td>$100</td><td>200x</td><td>$20,000</td><td>Mini (0.20)</td></tr>
+        <tr><td>$100</td><td>400x</td><td>$40,000</td><td>Mini (0.40)</td></tr>
+        <tr><td>$100</td><td>500x</td><td>$50,000</td><td>Mini (0.50)</td></tr>
+        <tr><td>$100</td><td>800x</td><td>$80,000</td><td>Mini (0.80)</td></tr>
+        <tr><td>$100</td><td>1000x</td><td>$1,00,000</td><td>Standard (1.00)</td></tr>
+        <tr><td>$100</td><td>2000x</td><td>$2,00,000</td><td>Standard (2.00)</td></tr>
+        <tr><td>$1,000</td><td>100x</td><td>$1,00,000</td><td>Standard (1.00)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>লেভারেজ আর ব্যালেন্সের সম্পর্ক — গুরুত্বপূর্ণ কথা</h3>
+  <div class="alert danger"><span class="alert-icon">🚨</span>
+    <strong>এটা সবচেয়ে বড় ভুলের জায়গা।</strong> ব্রোকার আপনাকে যত পাওয়ার দেয়, সেই পুরো টাকার লাভ-লস আপনার নয়। <strong>লাভ এবং লস শুধুমাত্র আপনার আসল ব্যালেন্স থেকেই হবে।</strong><br/>
+    উদাহরণ: আপনার ব্যালেন্স $100, লেভারেজ 100x → পাওয়ার $10,000। কিন্তু লস হলে শুধু আপনার $100 থেকেই কাটবে। পুরো $100 লস হয়ে গেলে একাউন্ট জিরো।
+  </div>
+</div>
+
+<!-- ===== SECTION 4: COMBINATION ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-red">🎯</div>
+    <div><span class="sec-num">সেকশন ৪</span><h2>তিনটা বিষয় একসাথে — লাইভ ট্রেড হিসাব</h2></div>
+  </div>
+  <p>এখন পিপস + লট সাইজ + লেভারেজ — তিনটাকে এক করে একটা পুরো ট্রেডের হিসাব করবেন। এটাই আসল কাজ।</p>
+
+  <!-- EXAMPLE 1 -->
+  <div class="calc-box">
+    <div class="calc-title">✅ উদাহরণ ১ — Mini Lot, 100x Leverage</div>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text"><strong>ব্যালেন্স:</strong> $100 | <strong>লেভারেজ:</strong> 100x | <strong>পাওয়ার:</strong> $10,000</div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text"><strong>লট সাইজ বেছে নিন:</strong> Mini Lot (0.10) = $10,000 — আপনার পুরো পাওয়ার ব্যবহার করা হচ্ছে</div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text"><strong>স্টপ লস (SL):</strong> 10 পিপস | <strong>টেক প্রফিট (TP):</strong> 210 পিপস</div></div>
+    <div class="calc-step"><div class="step-num">৪</div><div class="step-text"><strong>Mini Lot এ ১ পিপস = $1</strong> তাই:</div></div>
+    <div class="calc-step"><div class="step-num">৫</div><div class="step-text">❌ SL হিট হলে লস = 10 পিপস × $1 = <strong>$10 লস</strong></div></div>
+    <div class="calc-step"><div class="step-num">৬</div><div class="step-text">✅ TP হিট হলে প্রফিট = 210 পিপস × $1 = <strong>$210 প্রফিট</strong></div></div>
+  </div>
+
+  <!-- EXAMPLE 2 -->
+  <div class="calc-box">
+    <div class="calc-title">✅ উদাহরণ ২ — Standard Lot, 1000x Leverage</div>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text"><strong>ব্যালেন্স:</strong> $100 | <strong>লেভারেজ:</strong> 1000x | <strong>পাওয়ার:</strong> $1,00,000</div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text"><strong>লট সাইজ:</strong> Standard Lot (1.00) = $1,00,000 — পুরো পাওয়ার ব্যবহার</div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text"><strong>Standard Lot এ ১ পিপস = $10</strong></div></div>
+    <div class="calc-step"><div class="step-num">৪</div><div class="step-text">❌ SL (10 পিপস) হিট হলে লস = 10 × $10 = <strong>$100 লস</strong> → একাউন্ট জিরো!</div></div>
+    <div class="calc-step"><div class="step-num">৫</div><div class="step-text">✅ TP (210 পিপস) হিট হলে প্রফিট = 210 × $10 = <strong>$2,100 প্রফিট</strong></div></div>
+  </div>
+
+  <!-- EXAMPLE 3 -->
+  <div class="calc-box">
+    <div class="calc-title">✅ উদাহরণ ৩ — Micro Lot, 50x Leverage (কম রিস্ক)</div>
+    <div class="calc-step"><div class="step-num">১</div><div class="step-text"><strong>ব্যালেন্স:</strong> $100 | <strong>লেভারেজ:</strong> 50x | <strong>পাওয়ার:</strong> $5,000</div></div>
+    <div class="calc-step"><div class="step-num">২</div><div class="step-text"><strong>লট সাইজ বেছে নিন:</strong> Micro Lot (0.01) = $1,000 — পাওয়ার আছে ৫ টা Micro Lot নেওয়ার</div></div>
+    <div class="calc-step"><div class="step-num">৩</div><div class="step-text"><strong>Micro Lot এ ১ পিপস = $0.10</strong> | ১ টা ট্রেড নিলাম (0.01 লট)</div></div>
+    <div class="calc-step"><div class="step-num">৪</div><div class="step-text">❌ SL (10 পিপস) হিট হলে লস = 10 × $0.10 = <strong>$1 লস</strong></div></div>
+    <div class="calc-step"><div class="step-num">৫</div><div class="step-text">✅ TP (210 পিপস) হিট হলে প্রফিট = 210 × $0.10 = <strong>$21 প্রফিট</strong></div></div>
+  </div>
+
+  <div class="alert tip"><span class="alert-icon">💡</span><strong>তুলনা দেখুন:</strong> তিনটা এক্সামপলেই SL আর TP একই পিপসে, কিন্তু লাভ-লসের অংক কতটা ভিন্ন! এটাই লট সাইজের শক্তি — আর এটাই রিস্কের মূল জায়গা।</div>
+</div>
+
+<!-- ===== SECTION 5: COMMON MISTAKES ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-orange">🚫</div>
+    <div><span class="sec-num">সেকশন ৫</span><h2>কমন ভুল — যা বেশিরভাগ মানুষ করে</h2></div>
+  </div>
+
+  <div style="margin:12px 0">
+    <span class="mistake-tag">❌ ভুল</span> গোল্ডের পিপস গণনায় শুধু ১ ডিজিট বাদ দেওয়া।<br/>
+    <span class="correct-tag">✅ সঠিক</span> গোল্ডে <strong>২ টা ডিজিট</strong> বাদ দিতে হবে।
+  </div>
+  <div class="divider"></div>
+  <div style="margin:12px 0">
+    <span class="mistake-tag">❌ ভুল</span> লেভারেজের পাওয়া টাকা নিজের টাকা মনে করা।<br/>
+    <span class="correct-tag">✅ সঠিক</span> লেভারেজ শুধু ট্রেড করার <strong>ক্ষমতা দেয়</strong>। লাভ-লস হয় <strong>আপনার আসল ব্যালেন্স থেকে</strong>।
+  </div>
+  <div class="divider"></div>
+  <div style="margin:12px 0">
+    <span class="mistake-tag">❌ ভুল</span> বেশি লেভারেজ মানে বেশি প্রফিট।<br/>
+    <span class="correct-tag">✅ সঠিক</span> বেশি লেভারেজ মানে বেশি পাওয়ার — কিন্তু ঠিক ততটাই বেশি <strong>লস এর ঝুঁকি</strong>।
+  </div>
+  <div class="divider"></div>
+  <div style="margin:12px 0">
+    <span class="mistake-tag">❌ ভুল</span> লট সাইজ আর ইউনিট একই জিনিস।<br/>
+    <span class="correct-tag">✅ সঠিক</span> লট সাইজ = <strong>পরিমাণ</strong> (যেমন ১ কেজি)। ইউনিট = সেই পরিমাণের ভেতরে <strong>কত পিস</strong> (যেমন ১ কেজি টমেটো = ১০ টা)।
+  </div>
+  <div class="divider"></div>
+  <div style="margin:12px 0">
+    <span class="mistake-tag">❌ ভুল</span> লেভারেজের হিসাব না করে শুধু লট সাইজ দেখে ট্রেড নেওয়া।<br/>
+    <span class="correct-tag">✅ সঠিক</span> আপনার ব্যালেন্স → লেভারেজ → পাওয়ার → তারপর লট সাইজ বেছে নিন। এই <strong>ক্রমটা মেনে চলুন সবসময়</strong>।
+  </div>
+</div>
+
+<!-- ===== SECTION 6: QUICK FORMULA SHEET ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-blue">📐</div>
+    <div><span class="sec-num">সেকশন ৬</span><h2>দ্রুত ফর্মুলা শিট — মনে রাখার জন্য</h2></div>
+  </div>
+
+  <div class="formula">পাওয়ার = ব্যালেন্স × লেভারেজ</div>
+  <div class="formula">লাভ বা লস ($) = পিপস সংখ্যা × প্রতি পিপসের মূল্য</div>
+  <div class="formula">প্রতি পিপসের মূল্য = লট সাইজ অনুযায়ী নির্ধারিত (10 / 1 / 0.10)</div>
+
+  <h3>দ্রুত রেফারেন্স — ১ পিপস = কত ডলার</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>লট টাইপ</th><th>লট সাইজ</th><th>১ পিপস</th><th>১০ পিপস</th><th>৫০ পিপস</th><th>১০০ পিপস</th></tr></thead>
+      <tbody>
+        <tr><td>Standard</td><td>1.00</td><td>$10</td><td>$100</td><td>$500</td><td>$1,000</td></tr>
+        <tr><td>Mini</td><td>0.10</td><td>$1</td><td>$10</td><td>$50</td><td>$100</td></tr>
+        <tr><td>Micro</td><td>0.01</td><td>$0.10</td><td>$1</td><td>$5</td><td>$10</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===== SUMMARY ===== -->
+<div class="section-card" style="padding:0;overflow:hidden">
+  <div class="section-header" style="padding:24px 28px 14px;margin:0">
+    <div class="section-icon icon-green">📋</div>
+    <div><span class="sec-num">সারসংক্ষেপ</span><h2>মূল পয়েন্টগুলো এক জায়গায়</h2></div>
+  </div>
+  <div class="summary-box">
+    <h3>🎯 পিপস</h3>
+    <ul>
+      <li>মার্কেটের প্রাইস পরিবর্তনের একক পরিমাপ।</li>
+      <li>Forex পেয়ারে লাস্ট ১ ডিজিট বাদ দিয়ে পিপস গণনা করুন।</li>
+      <li>Gold-এ লাস্ট ২ ডিজিট বাদ দিন।</li>
+    </ul>
+    <h3>🎯 লট সাইজ</h3>
+    <ul>
+      <li>Standard = 1.00 = ১ লাখ ইউনিট | Mini = 0.10 = ১০ হাজার | Micro = 0.01 = ১ হাজার।</li>
+      <li>Standard এ ১ পিপস = $10 | Mini তে $1 | Micro তে $0.10।</li>
+      <li>লট বাড়ালে লাভ আর লস দুটোই সমানভাবে বাড়ে।</li>
+    </ul>
+    <h3>🎯 লেভারেজ</h3>
+    <ul>
+      <li>ব্রোকারের দেওয়া ভার্চুয়াল লোন — আপনার ব্যালেন্স বাড়িয়ে ট্রেড করার ক্ষমতা দেয়।</li>
+      <li>পাওয়ার = ব্যালেন্স × লেভারেজ।</li>
+      <li>লাভ-লস শুধু আপনার আসল ব্যালেন্স থেকে হয়, লেভারেজের টাকা থেকে নয়।</li>
+    </ul>
+    <h3>🎯 তিনটা মিলিয়ে কাজ</h3>
+    <ul>
+      <li>ব্যালেন্স দেখুন → লেভারেজ দেখুন → পাওয়ার বের করুন → লট সাইজ বেছে নিন → পিপস দিয়ে লাভ/লস হিসাব করুন।</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== SELF-TEST QUIZ ===== -->
+<div class="section-card">
+  <div class="section-header">
+    <div class="section-icon icon-purple">🧠</div>
+    <div><span class="sec-num">সেলফ-টেস্ট</span><h2>নিজেকে পরীক্ষা করুন — ৮টি প্রশ্ন</h2></div>
+  </div>
+  <p style="font-size:.84rem;color:#64748b;margin-bottom:16px">উত্তর লিখুন নিজে, তারপর নিজে যাচাই করুন নোটের ওপর থেকে। MCQ নয় — ব্যাখ্যা দিয়ে উত্তর দেওয়া।</p>
+
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ১</div><p>EUR/USD এর প্রাইস 1.10824 থেকে 1.10891 এ গেছে। কত পিপস পরিবর্তন হয়েছে? কীভাবে বের করলেন?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ২</div><p>Gold এর প্রাইস 2,512.47 থেকে 2,498.63 এ নেমেছে। কত পিপস ডাউন হয়েছে? গোল্ডের নিয়মটা কী?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৩</div><p>আপনার ব্যালেন্স $200, লেভারেজ 500x। আপনার মোট পাওয়ার কত? সর্বোচ্চ কোন লট সাইজে ট্রেড নিতে পারবেন?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৪</div><p>Standard Lot এ ১৫ পিপস লস হলে কত ডলার লস হবে? Mini Lot এ একই পরিমাণ লস হলে কত হবে?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৫</div><p>লেভারেজ 2000x আপনাকে কত পাওয়ার দেয় যখন আপনার ব্যালেন্স $50? সেই পাওয়ার দিয়ে কত স্ট্যান্ডার্ড লট নিতে পারবেন?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৬</div><p>আপনি Micro Lot (0.01) এ ট্রেড নিয়েছেন, SL দিয়েছেন 20 পিপস, TP দিয়েছেন 100 পিপস। SL হিট হলে কত লস? TP হিট হলে কত প্রফিট?</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৭</div><p>কেন লেভারেজের পাওয়ার বাড়ানো মানেই বেশি লাভ নয়? এটা ভুল কেন — একটা উদাহরণ দিয়ে বলুন।</p></div>
+  <div class="quiz-card"><div class="q-num">প্রশ্ন ৮</div><p>ব্যালেন্স $150, লেভারেজ 400x। আপনি 0.40 Mini Lot নিয়েছেন, মার্কেট 12 পিপস আপ করেছে। আপনার প্রফিট কত ডলার?</p></div>
+
+  <div class="alert tip" style="margin-top:20px"><span class="alert-icon">🎓</span><strong>লক্ষ্য:</strong> এই ৮টি প্রশ্নের উত্তর যদি ৫ সেকেন্ডের মধ্যে মাথায় না আসে, তাহলে এই নোটটা আবার পড়ুন। এই হিসাব দ্রুত করার ক্ষমতাই একজন সফল ট্রেডারের প্রথম পরীক্ষা।</div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:24px 0;color:#94a3b8;font-size:.82rem">
+  📝 এই স্টাডি ম্যাটেরিয়াল তৈরি হয়েছে আপনার ভিডিও ট্রান্সক্রিপ্ট থেকে — পরিষ্কার করে, লজিক্যালি সাজিয়ে, ভুল বাদ দিয়ে।<br/>
+  পরবর্তী ভিডিও: মানি ম্যানেজমেন্ট, রিস্ক ম্যানেজমেন্ট, ইন্ডিকেটর
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
