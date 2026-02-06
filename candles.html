@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ক্যান্ডেলস্টিক প্যাটার্ন - সম্পূর্ণ গাইড</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        nav {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #667eea;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        /* Candle Visualization */
+        .candle-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 30px;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 300px;
+        }
+
+        .candle {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .candle:hover {
+            transform: scale(1.1);
+        }
+
+        .candle-wick {
+            width: 2px;
+            background: #333;
+            position: relative;
+        }
+
+        .candle-body {
+            width: 30px;
+            border: 2px solid;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bullish .candle-body {
+            background: #26a69a;
+            border-color: #26a69a;
+        }
+
+        .bearish .candle-body {
+            background: #ef5350;
+            border-color: #ef5350;
+        }
+
+        .candle-label {
+            margin-top: 10px;
+            font-size: 0.9em;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Interactive Candle Builder */
+        .candle-builder {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #667eea;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .value-display {
+            text-align: center;
+            font-weight: 600;
+            color: #764ba2;
+            margin-top: 5px;
+        }
+
+        /* Pattern Cards */
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .pattern-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 10px;
+            padding: 25px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .pattern-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .pattern-card h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .pattern-type {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .bullish-pattern {
+            background: #26a69a;
+            color: white;
+        }
+
+        .bearish-pattern {
+            background: #ef5350;
+            color: white;
+        }
+
+        .neutral-pattern {
+            background: #ffa726;
+            color: white;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        /* Quiz Section */
+        .quiz-container {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .question h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            background: #667eea15;
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background: #4caf5015;
+        }
+
+        .option.wrong {
+            border-color: #ef5350;
+            background: #ef535015;
+        }
+
+        /* Comparison Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #26a69a;
+        }
+
+        .btn-secondary:hover {
+            background: #00897b;
+        }
+
+        /* Code Block */
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #26a69a 0%, #667eea 100%);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .candle-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #667eea;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* SVG Candle */
+        .svg-candle-demo {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>📊 ক্যান্ডেলস্টিক প্যাটার্ন মাস্টার গাইড</h1>
+            <p class="subtitle">শুরু থেকে এক্সপার্ট লেভেল পর্যন্ত সম্পূর্ণ ইন্টারঅ্যাক্টিভ শিক্ষা</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#basics">মূল ধারণা</a></li>
+                <li><a href="#builder">ক্যান্ডেল তৈরি করুন</a></li>
+                <li><a href="#simple">সিম্পল প্যাটার্ন</a></li>
+                <li><a href="#complex">কমপ্লেক্স প্যাটার্ন</a></li>
+                <li><a href="#reversal">রিভার্সাল</a></li>
+                <li><a href="#quiz">কুইজ</a></li>
+                <li><a href="#summary">সারাংশ</a></li>
+            </ul>
+        </nav>
+
+        <!-- Section 1: Basics -->
+        <div id="basics" class="section">
+            <h2>১. ক্যান্ডেলস্টিক কী এবং কেন?</h2>
+            
+            <div class="info-box">
+                <strong>📌 গুরুত্বপূর্ণ:</strong> ক্যান্ডেলস্টিক হলো জাপানিজদের তৈরি একটি চার্ট প্যাটার্ন যা মার্কেটের প্রাইস মুভমেন্ট সবচেয়ে কার্যকরভাবে দেখায়।
+            </div>
+
+            <h3>ক্যান্ডেলের গঠন</h3>
+            
+            <div class="candle-container">
+                <!-- Bullish Candle -->
+                <div class="candle bullish">
+                    <div class="candle-wick" style="height: 30px; background: #26a69a;"></div>
+                    <div class="candle-body" style="height: 120px;">
+                        <div style="position: absolute; left: 40px; top: 0; white-space: nowrap; font-size: 0.85em;">← Close (ক্লোজ)</div>
+                        <div style="position: absolute; left: 40px; bottom: 0; white-space: nowrap; font-size: 0.85em;">← Open (ওপেন)</div>
+                    </div>
+                    <div class="candle-wick" style="height: 40px; background: #26a69a;"></div>
+                    <div class="candle-label" style="color: #26a69a;">বুলিশ ক্যান্ডেল<br>(দাম বেড়েছে)</div>
+                </div>
+
+                <!-- Bearish Candle -->
+                <div class="candle bearish">
+                    <div class="candle-wick" style="height: 50px; background: #ef5350;"></div>
+                    <div class="candle-body" style="height: 100px;">
+                        <div style="position: absolute; left: 40px; top: 0; whitespace: nowrap; font-size: 0.85em;">← Open (ওপেন)</div>
+                        <div style="position: absolute; left: 40px; bottom: 0; white-space: nowrap; font-size: 0.85em;">← Close (ক্লোজ)</div>
+                    </div>
+                    <div class="candle-wick" style="height: 25px; background: #ef5350;"></div>
+                    <div class="candle-label" style="color: #ef5350;">বিয়ারিশ ক্যান্ডেল<br>(দাম কমেছে)</div>
+                </div>
+            </div>
+
+            <h3>ক্যান্ডেলের অংশসমূহ</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>অংশ</th>
+                        <th>বুলিশ ক্যান্ডেল</th>
+                        <th>বিয়ারিশ ক্যান্ডেল</th>
+                        <th>গুরুত্ব</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Body (বডি)</strong></td>
+                        <td>Open থেকে Close পর্যন্ত<br>(নিচ থেকে উপর)</td>
+                        <td>Open থেকে Close পর্যন্ত<br>(উপর থেকে নিচ)</td>
+                        <td>মূল প্রাইস মুভমেন্ট দেখায়</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Upper Wick</strong></td>
+                        <td>Close থেকে High পর্যন্ত</td>
+                        <td>Open থেকে High পর্যন্ত</td>
+                        <td>সেলার প্রেসার দেখায়</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lower Wick</strong></td>
+                        <td>Open থেকে Low পর্যন্ত</td>
+                        <td>Close থেকে Low পর্যন্ত</td>
+                        <td>বায়ার প্রেসার দেখায়</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box">
+                <strong>✅ মনে রাখুন:</strong> উইক = দুর্বলতা। যত বেশি উইক, তত দুর্বল ক্যান্ডেল।
+            </div>
+        </div>
+
+        <!-- Section 2: Interactive Candle Builder -->
+        <div id="builder" class="section">
+            <h2>২. নিজের ক্যান্ডেল তৈরি করুন (ইন্টারঅ্যাক্টিভ)</h2>
+            
+            <div class="candle-builder">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="candleType">ক্যান্ডেল টাইপ:</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="candleType" onchange="updateCandle()">
+                            <span class="slider"></span>
+                        </label>
+                        <div class="value-display" id="typeDisplay">বিয়ারিশ (লাল)</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="bodyHeight">বডি উচ্চতা:</label>
+                        <input type="range" id="bodyHeight" min="50" max="200" value="120" oninput="updateCandle()">
+                        <div class="value-display" id="bodyValue">120px</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="upperWick">উপরের উইক:</label>
+                        <input type="range" id="upperWick" min="0" max="100" value="30" oninput="updateCandle()">
+                        <div class="value-display" id="upperValue">30px</div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="lowerWick">নিচের উইক:</label>
+                        <input type="range" id="lowerWick" min="0" max="100" value="40" oninput="updateCandle()">
+                        <div class="value-display" id="lowerValue">40px</div>
+                    </div>
+                </div>
+
+                <h3 style="text-align: center; margin-bottom: 20px;">আপনার তৈরি ক্যান্ডেল:</h3>
+                <div class="candle-container">
+                    <div id="customCandle" class="candle bearish">
+                        <div id="upperWickDiv" class="candle-wick" style="height: 30px; background: #ef5350;"></div>
+                        <div id="bodyDiv" class="candle-body" style="height: 120px;"></div>
+                        <div id="lowerWickDiv" class="candle-wick" style="height: 40px; background: #ef5350;"></div>
+                        <div id="candleLabel" class="candle-label" style="color: #ef5350;">বিয়ারিশ ক্যান্ডেল</div>
+                    </div>
+                </div>
+
+                <div id="candleAnalysis" class="info-box">
+                    <strong>বিশ্লেষণ:</strong> এই ক্যান্ডেলটি মাঝারি শক্তিশালী বিয়ারিশ ক্যান্ডেল। উভয় দিকে উইক আছে বলে সম্পূর্ণ শক্তিশালী নয়।
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Simple Patterns -->
+        <div id="simple" class="section">
+            <h2>৩. সিম্পল প্যাটার্ন (১ ক্যান্ডেল)</h2>
+            
+            <div class="pattern-grid">
+                <!-- Doji -->
+                <div class="pattern-card" onclick="showPatternDetails('doji')">
+                    <span class="pattern-type neutral-pattern">নিউট্রাল</span>
+                    <h4>ডোজি (Doji)</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle">
+                            <div class="candle-wick" style="height: 50px; width: 2px; background: #333;"></div>
+                            <div class="candle-body" style="height: 5px; width: 30px; background: #ffa726; border-color: #ffa726;"></div>
+                            <div class="candle-wick" style="height: 50px; width: 2px; background: #333;"></div>
+                        </div>
+                    </div>
+                    <p><strong>মানে:</strong> ওপেন ≈ ক্লোজ, বায়ার = সেলার</p>
+                    <p><strong>ইঙ্গিত:</strong> নিউট্রাল মার্কেট, রিভার্সালের সম্ভাবনা</p>
+                </div>
+
+                <!-- Marubozu Bullish -->
+                <div class="pattern-card" onclick="showPatternDetails('marubozu-bull')">
+                    <span class="pattern-type bullish-pattern">বুলিশ</span>
+                    <h4>মারুবোজু (বুলিশ)</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 100px; width: 30px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>মানে:</strong> কোনো উইক নেই, শুধু বায়ার</p>
+                    <p><strong>ইঙ্গিত:</strong> অত্যন্ত শক্তিশালী বুলিশ সিগন্যাল</p>
+                </div>
+
+                <!-- Marubozu Bearish -->
+                <div class="pattern-card" onclick="showPatternDetails('marubozu-bear')">
+                    <span class="pattern-type bearish-pattern">বিয়ারিশ</span>
+                    <h4>মারুবোজু (বিয়ারিশ)</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 100px; width: 30px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>মানে:</strong> কোনো উইক নেই, শুধু সেলার</p>
+                    <p><strong>ইঙ্গিত:</strong> অত্যন্ত শক্তিশালী বিয়ারিশ সিগন্যাল</p>
+                </div>
+
+                <!-- Spinning Top -->
+                <div class="pattern-card" onclick="showPatternDetails('spinning')">
+                    <span class="pattern-type neutral-pattern">নিউট্রাল</span>
+                    <h4>স্পিনিং টপ</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle">
+                            <div class="candle-wick" style="height: 40px; width: 2px; background: #333;"></div>
+                            <div class="candle-body" style="height: 20px; width: 30px; background: #26a69a; border-color: #26a69a;"></div>
+                            <div class="candle-wick" style="height: 40px; width: 2px; background: #333;"></div>
+                        </div>
+                    </div>
+                    <p><strong>মানে:</strong> ছোট বডি, উভয় দিকে উইক</p>
+                    <p><strong>ইঙ্গিত:</strong> অনিশ্চয়তা, ট্রেন্ড দুর্বল</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Complex Patterns -->
+        <div id="complex" class="section">
+            <h2>৪. কমপ্লেক্স প্যাটার্ন (২-৩ ক্যান্ডেল)</h2>
+            
+            <div class="pattern-grid">
+                <!-- Bullish Engulfing -->
+                <div class="pattern-card">
+                    <span class="pattern-type bullish-pattern">বুলিশ রিভার্সাল</span>
+                    <h4>বুলিশ এনগালফিং</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 60px; width: 25px;"></div>
+                        </div>
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 100px; width: 30px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>শর্ত:</strong> ২য় ক্যান্ডেল ১ম কে সম্পূর্ণ গিলে ফেলে</p>
+                    <p><strong>কোথায়:</strong> ডাউনট্রেন্ডের শেষে + সাপোর্ট লেভেলে</p>
+                    <p><strong>সিগন্যাল:</strong> শক্তিশালী বুলিশ রিভার্সাল</p>
+                </div>
+
+                <!-- Bearish Engulfing -->
+                <div class="pattern-card">
+                    <span class="pattern-type bearish-pattern">বিয়ারিশ রিভার্সাল</span>
+                    <h4>বিয়ারিশ এনগালফিং</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 60px; width: 25px;"></div>
+                        </div>
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 100px; width: 30px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>শর্ত:</strong> ২য় ক্যান্ডেল ১ম কে সম্পূর্ণ গিলে ফেলে</p>
+                    <p><strong>কোথায়:</strong> আপট্রেন্ডের শেষে + রেজিস্ট্যান্স লেভেলে</p>
+                    <p><strong>সিগন্যাল:</strong> শক্তিশালী বিয়ারিশ রিভার্সাল</p>
+                </div>
+
+                <!-- Morning Star -->
+                <div class="pattern-card">
+                    <span class="pattern-type bullish-pattern">বুলিশ রিভার্সাল</span>
+                    <h4>মর্নিং স্টার</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 80px; width: 25px;"></div>
+                        </div>
+                        <div class="candle">
+                            <div class="candle-wick" style="height: 20px; width: 2px; background: #333;"></div>
+                            <div class="candle-body" style="height: 10px; width: 20px; background: #ffa726; border-color: #ffa726;"></div>
+                            <div class="candle-wick" style="height: 20px; width: 2px; background: #333;"></div>
+                        </div>
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 80px; width: 25px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>গঠন:</strong> বড় রেড + ছোট ডোজি + বড় গ্রিন</p>
+                    <p><strong>নির্ভরযোগ্যতা:</strong> ⭐⭐⭐⭐⭐ (সর্বোচ্চ)</p>
+                    <p><strong>সিগন্যাল:</strong> অত্যন্ত শক্তিশালী বুলিশ রিভার্সাল</p>
+                </div>
+
+                <!-- Evening Star -->
+                <div class="pattern-card">
+                    <span class="pattern-type bearish-pattern">বিয়ারিশ রিভার্সাল</span>
+                    <h4>ইভনিং স্টার</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 80px; width: 25px;"></div>
+                        </div>
+                        <div class="candle">
+                            <div class="candle-wick" style="height: 20px; width: 2px; background: #333;"></div>
+                            <div class="candle-body" style="height: 10px; width: 20px; background: #ffa726; border-color: #ffa726;"></div>
+                            <div class="candle-wick" style="height: 20px; width: 2px; background: #333;"></div>
+                        </div>
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 80px; width: 25px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>গঠন:</strong> বড় গ্রিন + ছোট ডোজি + বড় রেড</p>
+                    <p><strong>নির্ভরযোগ্যতা:</strong> ⭐⭐⭐⭐⭐ (সর্বোচ্চ)</p>
+                    <p><strong>সিগন্যাল:</strong> অত্যন্ত শক্তিশালী বিয়ারিশ রিভার্সাল</p>
+                </div>
+
+                <!-- Harami -->
+                <div class="pattern-card">
+                    <span class="pattern-type bullish-pattern">বুলিশ রিভার্সাল</span>
+                    <h4>বুলিশ হারামি</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 100px; width: 35px;"></div>
+                        </div>
+                        <div class="candle bullish">
+                            <div class="candle-body" style="height: 40px; width: 20px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>মানে:</strong> "প্রেগন্যান্ট" - ছোট ক্যান্ডেল বড়টির ভেতরে</p>
+                    <p><strong>শর্ত:</strong> ২য় ক্যান্ডেল ১ম এর মাঝখানে</p>
+                    <p><strong>সিগন্যাল:</strong> সেলার শক্তি শেষ, বায়ার আসছে</p>
+                </div>
+
+                <!-- Tweezer -->
+                <div class="pattern-card">
+                    <span class="pattern-type bullish-pattern">বুলিশ রিভার্সাল</span>
+                    <h4>টুইজার বটম</h4>
+                    <div class="candle-container" style="min-height: 150px; padding: 20px;">
+                        <div class="candle bearish">
+                            <div class="candle-body" style="height: 70px; width: 25px;"></div>
+                            <div class="candle-wick" style="height: 30px; width: 2px; background: #ef5350;"></div>
+                        </div>
+                        <div class="candle bullish">
+                            <div class="candle-wick" style="height: 30px; width: 2px; background: #26a69a;"></div>
+                            <div class="candle-body" style="height: 70px; width: 25px;"></div>
+                        </div>
+                    </div>
+                    <p><strong>শর্ত:</strong> দুটি ক্যান্ডেলের Low একই লেভেলে</p>
+                    <p><strong>গুরুত্ব:</strong> সাপোর্ট লেভেল কনফার্ম করে</p>
+                    <p><strong>সিগন্যাল:</strong> শক্তিশালী বুলিশ রিভার্সাল</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ গুরুত্বপূর্ণ সতর্কতা:</strong> সব প্যাটার্ন শুধুমাত্র সাপোর্ট/রেজিস্ট্যান্স লেভেলে কাজ করে। মিডল মার্কেটে এগুলো ট্র্যাপ হতে পারে!
+            </div>
+        </div>
+
+        <!-- Section 5: Reversal vs Continuation -->
+        <div id="reversal" class="section">
+            <h2>৫. রিভার্সাল বনাম কন্টিনিউয়েশন</h2>
+            
+            <h3>রিভার্সাল (Reversal)</h3>
+            <div class="success-box">
+                <strong>সংজ্ঞা:</strong> ট্রেন্ড সম্পূর্ণ উল্টে যায়<br>
+                <strong>উদাহরণ:</strong> ডাউনট্রেন্ড → সাপোর্টে বুলিশ এনগালফিং → আপট্রেন্ড শুরু
+            </div>
+
+            <h4>রিভার্সাল ট্রেড সেটআপ:</h4>
+            <pre><code>১. সাপোর্ট/রেজিস্ট্যান্স লেভেল চিহ্নিত করুন
+২. রিভার্সাল প্যাটার্ন (এনগালফিং, মর্নিং স্টার) দেখুন
+৩. এন্ট্রি: প্যাটার্ন কমপ্লিট হওয়ার পর
+৪. স্টপ লস: সাপোর্ট/রেজিস্ট্যান্সের সামান্য বাইরে
+৫. টেক প্রফিট: পরবর্তী রেজিস্ট্যান্স/সাপোর্ট লেভেল
+
+উদাহরণ:
+সাপোর্ট: 1.2000
+বুলিশ এনগালফিং কমপ্লিট
+এন্ট্রি: 1.2010
+স্টপ লস: 1.1980 (20 পিপস)
+টেক প্রফিট: 1.2100 (90 পিপস)
+Risk:Reward = 1:4.5</code></pre>
+
+            <h3>কন্টিনিউয়েশন (Continuation)</h3>
+            <div class="info-box">
+                <strong>সংজ্ঞা:</strong> ট্রেন্ড একই দিকে চলতে থাকে<br>
+                <strong>উদাহরণ:</strong> আপট্রেন্ড → ছোট সেলিং → বুলিশ এনগালফিং → আপট্রেন্ড চলতে থাকে
+            </div>
+
+            <h4>কন্টিনিউয়েশন স্ক্যালপিং সেটআপ:</h4>
+            <pre><code>১. শক্তিশালী ট্রেন্ড চিহ্নিত করুন
+২. পুলব্যাকে এনগালফিং প্যাটার্ন দেখুন
+৩. এন্ট্রি: এনগালফিং কমপ্লিট হওয়ার পর
+৪. স্টপ লস: এনগালফিং ক্যান্ডেলের নিচে/উপরে
+৫. টেক প্রফিট: 1:1 ratio
+
+উদাহরণ:
+আপট্রেন্ড চলছে
+ছোট রেড ক্যান্ডেল
+বুলিশ এনগালফিং
+এন্ট্রি: 1.2050
+স্টপ লস: 1.2030 (20 পিপস)
+টেক প্রফিট: 1.2070 (20 পিপস)
+Risk:Reward = 1:1</code></pre>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>বৈশিষ্ট্য</th>
+                        <th>রিভার্সাল</th>
+                        <th>কন্টিনিউয়েশন</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>অবস্থান</td>
+                        <td>সাপোর্ট/রেজিস্ট্যান্সে</td>
+                        <td>ট্রেন্ডের মাঝে</td>
+                    </tr>
+                    <tr>
+                        <td>প্যাটার্ন</td>
+                        <td>শক্তিশালী বিপরীত প্যাটার্ন</td>
+                        <td>একই দিকের প্যাটার্ন</td>
+                    </tr>
+                    <tr>
+                        <td>ক্যান্ডেল সাইজ</td>
+                        <td>বড় বডি</td>
+                        <td>ছোট পুলব্যাক</td>
+                    </tr>
+                    <tr>
+                        <td>লক্ষ্য</td>
+                        <td>পরবর্তী লেভেল</td>
+                        <td>স্বল্প দূরত্ব (স্ক্যালপিং)</td>
+                    </tr>
+                    <tr>
+                        <td>Risk:Reward</td>
+                        <td>1:3 থেকে 1:5</td>
+                        <td>1:1 থেকে 1:2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Section 6: Quiz -->
+        <div id="quiz" class="section">
+            <h2>৬. নিজেকে পরীক্ষা করুন</h2>
+            
+            <div class="quiz-container">
+                <div class="question">
+                    <h4>প্রশ্ন ১: একটি ক্যান্ডেলের উভয় দিকে বড় উইক আছে কিন্তু বডি সবুজ। এটি কী ধরনের সিগন্যাল?</h4>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ক) শক্তিশালী বুলিশ সিগন্যাল
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, true)">
+                            খ) দুর্বল বুলিশ সিগন্যাল (প্রচুর সেলার প্রেসার আছে)
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            গ) বিয়ারিশ সিগন্যাল
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ঘ) নিউট্রাল সিগন্যাল
+                        </div>
+                    </div>
+                    <div class="explanation" style="display: none; margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 5px;">
+                        <strong>ব্যাখ্যা:</strong> যদিও ক্যান্ডেলটি বুলিশ (সবুজ), কিন্তু উভয় দিকে বড় উইক থাকার অর্থ প্রচুর সেলার প্রেসার ছিল। এটি একটি দুর্বল বুলিশ সিগন্যাল। মনে রাখুন: উইক = দুর্বলতা।
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>প্রশ্ন ২: মর্নিং স্টার প্যাটার্ন কোথায় সবচেয়ে কার্যকর?</h4>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ক) মিডল মার্কেটে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, true)">
+                            খ) ডাউনট্রেন্ডের শেষে সাপোর্ট লেভেলে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            গ) আপট্রেন্ডের মাঝখানে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ঘ) যেকোনো জায়গায়
+                        </div>
+                    </div>
+                    <div class="explanation" style="display: none; margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 5px;">
+                        <strong>ব্যাখ্যা:</strong> মর্নিং স্টার একটি বুলিশ রিভার্সাল প্যাটার্ন। এটি ডাউনট্রেন্ডের শেষে সাপোর্ট লেভেলে সবচেয়ে কার্যকর। মিডল মার্কেটে এই প্যাটার্ন নির্ভরযোগ্য নয়।
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h4>প্রশ্ন ৩: বুলিশ এনগালফিং প্যাটার্নে স্টপ লস কোথায় রাখবেন?</h4>
+                    <div class="options">
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ক) প্রথম ক্যান্ডেলের উপরে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            খ) দ্বিতীয় ক্যান্ডেলের মাঝখানে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, true)">
+                            গ) সাপোর্ট লেভেলের সামান্য নিচে
+                        </div>
+                        <div class="option" onclick="checkAnswer(this, false)">
+                            ঘ) স্টপ লস দরকার নেই
+                        </div>
+                    </div>
+                    <div class="explanation" style="display: none; margin-top: 15px; padding: 15px; background: #e3f2fd; border-radius: 5px;">
+                        <strong>ব্যাখ্যা:</strong> স্টপ লস সবসময় সাপোর্ট লেভেলের সামান্য নিচে রাখতে হবে। যদি মার্কেট সাপোর্ট ব্রেক করে, তাহলে আপনার বিশ্লেষণ ভুল ছিল এবং দ্রুত বের হয়ে যাওয়া উচিত।
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quizProgress" style="width: 0%;">0% সম্পন্ন</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 7: Summary -->
+        <div id="summary" class="section">
+            <h2>৭. সংক্ষিপ্ত সারাংশ</h2>
+            
+            <h3>🔑 মূল পয়েন্ট</h3>
+            
+            <div class="pattern-grid">
+                <div class="info-box">
+                    <h4>ক্যান্ডেলের গঠন</h4>
+                    <ul>
+                        <li>Body = Opening থেকে Closing</li>
+                        <li>Upper Wick = High পর্যন্ত</li>
+                        <li>Lower Wick = Low পর্যন্ত</li>
+                        <li>সবুজ = বুলিশ, লাল = বিয়ারিশ</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>শক্তি মাপার নিয়ম</h4>
+                    <ul>
+                        <li>কোনো উইক নেই = সবচেয়ে শক্তিশালী</li>
+                        <li>ছোট উইক = শক্তিশালী</li>
+                        <li>বড় উইক = দুর্বল</li>
+                        <li>উইক = দুর্বলতা</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>সেরা প্যাটার্ন</h4>
+                    <ul>
+                        <li>রিভার্সাল: মর্নিং/ইভনিং স্টার</li>
+                        <li>শক্তিশালী: এনগালফিং</li>
+                        <li>নিউট্রাল: ডোজি, স্পিনিং টপ</li>
+                        <li>বিরল কিন্তু শক্তিশালী: কিকার</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>ট্রেডিং মূলনীতি</h4>
+                    <ul>
+                        <li>শুধু সাপোর্ট/রেজিস্ট্যান্সে ট্রেড করুন</li>
+                        <li>সবসময় স্টপ লস ব্যবহার করুন</li>
+                        <li>কনফার্মেশন অপেক্ষা করুন</li>
+                        <li>প্র্যাক্টিস অপরিহার্য</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>❌ সাধারণ ভুল</h3>
+            <div class="warning-box">
+                <ol>
+                    <li><strong>মিডল মার্কেটে ট্রেড:</strong> সাপোর্ট/রেজিস্ট্যান্স ছাড়া প্যাটার্ন কাজ করে না</li>
+                    <li><strong>টাইম ফ্রেম মিক্স:</strong> একই টাইম ফ্রেমে সিদ্ধান্ত নিন</li>
+                    <li><strong>একা ক্যান্ডেল:</strong> অন্যান্য ইন্ডিকেটরও ব্যবহার করুন</li>
+                    <li><strong>স্টপ লস না রাখা:</strong> সবসময় রিস্ক ম্যানেজ করুন</li>
+                    <li><strong>ট্র্যাপ না চেনা:</strong> কনফার্মেশন অপেক্ষা করুন</li>
+                </ol>
+            </div>
+
+            <h3>📚 এরপর কী শিখবেন?</h3>
+            <div class="success-box">
+                <ol>
+                    <li>সাপোর্ট এবং রেজিস্ট্যান্স (অ্যাডভান্স)</li>
+                    <li>সাপ্লাই এবং ডিমান্ড জোন</li>
+                    <li>ট্রেন্ড লাইন এবং চ্যানেল</li>
+                    <li>মুভিং এভারেজ এবং ইন্ডিকেটর</li>
+                    <li>রিস্ক ম্যানেজমেন্ট এবং মানি ম্যানেজমেন্ট</li>
+                </ol>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <button class="btn" onclick="window.print()">📄 এই গাইড প্রিন্ট করুন</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 কুইজ রিসেট করুন</button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <h3>💡 মনে রাখুন</h3>
+            <p>ক্যান্ডেলস্টিক একা যথেষ্ট নয় - সাপোর্ট/রেজিস্ট্যান্স সবসময় জরুরি</p>
+            <p>প্র্যাক্টিস ছাড়া মাস্টারি অসম্ভব - প্রথমে শিখুন, তারপর আয় করুন</p>
+            <p style="margin-top: 20px; color: #667eea; font-weight: 600;">শুভকামনা। এখন প্র্যাক্টিস শুরু করুন! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        // Interactive Candle Builder
+        function updateCandle() {
+            const isBullish = document.getElementById('candleType').checked;
+            const bodyHeight = document.getElementById('bodyHeight').value;
+            const upperWick = document.getElementById('upperWick').value;
+            const lowerWick = document.getElementById('lowerWick').value;
+
+            const candle = document.getElementById('customCandle');
+            const bodyDiv = document.getElementById('bodyDiv');
+            const upperWickDiv = document.getElementById('upperWickDiv');
+            const lowerWickDiv = document.getElementById('lowerWickDiv');
+            const label = document.getElementById('candleLabel');
+            const typeDisplay = document.getElementById('typeDisplay');
+
+            // Update values display
+            document.getElementById('bodyValue').textContent = bodyHeight + 'px';
+            document.getElementById('upperValue').textContent = upperWick + 'px';
+            document.getElementById('lowerValue').textContent = lowerWick + 'px';
+
+            // Update candle
+            if (isBullish) {
+                candle.className = 'candle bullish';
+                bodyDiv.style.borderColor = '#26a69a';
+                bodyDiv.style.background = '#26a69a';
+                upperWickDiv.style.background = '#26a69a';
+                lowerWickDiv.style.background = '#26a69a';
+                label.style.color = '#26a69a';
+                label.textContent = 'বুলিশ ক্যান্ডেল';
+                typeDisplay.textContent = 'বুলিশ (সবুজ)';
+            } else {
+                candle.className = 'candle bearish';
+                bodyDiv.style.borderColor = '#ef5350';
+                bodyDiv.style.background = '#ef5350';
+                upperWickDiv.style.background = '#ef5350';
+                lowerWickDiv.style.background = '#ef5350';
+                label.style.color = '#ef5350';
+                label.textContent = 'বিয়ারিশ ক্যান্ডেল';
+                typeDisplay.textContent = 'বিয়ারিশ (লাল)';
+            }
+
+            bodyDiv.style.height = bodyHeight + 'px';
+            upperWickDiv.style.height = upperWick + 'px';
+            lowerWickDiv.style.height = lowerWick + 'px';
+
+            // Analysis
+            const totalWick = parseInt(upperWick) + parseInt(lowerWick);
+            const wickRatio = totalWick / parseInt(bodyHeight);
+            
+            let strength = '';
+            let analysis = '';
+            
+            if (wickRatio < 0.3) {
+                strength = 'অত্যন্ত শক্তিশালী';
+            } else if (wickRatio < 0.6) {
+                strength = 'শক্তিশালী';
+            } else if (wickRatio < 1) {
+                strength = 'মাঝারি শক্তিশালী';
+            } else {
+                strength = 'দুর্বল';
+            }
+
+            const candleType = isBullish ? 'বুলিশ' : 'বিয়ারিশ';
+            
+            if (totalWick === 0) {
+                analysis = `এটি একটি মারুবোজু ${candleType} ক্যান্ডেল - কোনো উইক নেই! সবচেয়ে শক্তিশালী ${candleType} সিগন্যাল।`;
+            } else if (wickRatio < 0.3) {
+                analysis = `এটি একটি ${strength} ${candleType} ক্যান্ডেল। উইক খুব কম, যার মানে বিপরীত শক্তি খুবই দুর্বল ছিল।`;
+            } else if (wickRatio < 1) {
+                analysis = `এটি একটি ${strength} ${candleType} ক্যান্ডেল। ${upperWick > lowerWick ? 'উপরে' : 'নিচে'} বড় উইক আছে, যার মানে ${upperWick > lowerWick ? 'সেলার' : 'বায়ার'} প্রেসার ছিল।`;
+            } else {
+                analysis = `এটি একটি ${strength} ${candleType} ক্যান্ডেল। উভয় দিকে বড় উইক আছে বলে এটি নির্ভরযোগ্য নয়। প্রচুর বিপরীত প্রেসার ছিল।`;
+            }
+
+            document.getElementById('candleAnalysis').innerHTML = `<strong>বিশ্লেষণ:</strong> ${analysis}`;
+        }
+
+        // Quiz functionality
+        let answeredQuestions = 0;
+        const totalQuestions = 3;
+
+        function checkAnswer(element, isCorrect) {
+            // Disable all options in this question
+            const options = element.parentElement.children;
+            for (let opt of options) {
+                opt.style.pointerEvents = 'none';
+            }
+
+            // Mark answer
+            if (isCorrect) {
+                element.classList.add('correct');
+                answeredQuestions++;
+            } else {
+                element.classList.add('wrong');
+                // Show correct answer
+                for (let opt of options) {
+                    if (opt.onclick && opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                }
+            }
+
+            // Show explanation
+            element.parentElement.nextElementSibling.style.display = 'block';
+
+            // Update progress
+            const progress = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+            document.getElementById('quizProgress').textContent = Math.round(progress) + '% সম্পন্ন';
+        }
+
+        function resetQuiz() {
+            answeredQuestions = 0;
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => {
+                const options = q.querySelectorAll('.option');
+                options.forEach(opt => {
+                    opt.classList.remove('correct', 'wrong');
+                    opt.style.pointerEvents = 'auto';
+                });
+                q.querySelector('.explanation').style.display = 'none';
+            });
+            document.getElementById('quizProgress').style.width = '0%';
+            document.getElementById('quizProgress').textContent = '0% সম্পন্ন';
+        }
+
+        function showPatternDetails(patternId) {
+            alert('এই প্যাটার্ন সম্পর্কে বিস্তারিত তথ্য শীঘ্রই যোগ করা হবে!');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        updateCandle();
+    </script>
+</body>
+</html>
